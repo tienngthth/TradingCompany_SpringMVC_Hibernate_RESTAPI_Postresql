@@ -59,23 +59,23 @@ public class CustomerService {
         if (customer.getName() == null) {
             return "Failed to create new customer without name";
         } else {
-            customer.setName(customer.getName().toLowerCase());
+            customer.setName(customer.getName().toLowerCase().replaceAll(" ",""));
         }
         if (customer.getAddress() != null) {
-            customer.setAddress(customer.getAddress().toLowerCase());
+            customer.setAddress(customer.getAddress().toLowerCase().replaceAll(" ",""));
         }
         if (customer.getPhone() != null) {
             customer.setPhone(customer.getPhone().replaceAll(" ",""));
         }
         sessionFactory.getCurrentSession().save(customer);
-        return "Successfully create new customer with id " + customer.getId();
+        return "Successfully create new customer";
     }
 
     public String updateCustomer(Customer customer) {
         Customer currentCustomer = getCustomerById(customer.getId());
         if (currentCustomer != null) {
             if (customer.getName() != null) {
-                currentCustomer.setName(customer.getName().toLowerCase());
+                currentCustomer.setName(customer.getName().toLowerCase().replaceAll(" ",""));
             }
             if (customer.getEmail() != null) {
                 currentCustomer.setEmail(customer.getEmail());
@@ -84,7 +84,7 @@ public class CustomerService {
                 currentCustomer.setPhone(customer.getPhone().replaceAll(" ",""));
             }
             if (customer.getAddress() != null) {
-                currentCustomer.setAddress(customer.getAddress().toLowerCase());
+                currentCustomer.setAddress(customer.getAddress().toLowerCase().replaceAll(" ",""));
             }
             if (customer.getFax() != null) {
                 currentCustomer.setFax(customer.getFax());
@@ -93,7 +93,7 @@ public class CustomerService {
                 currentCustomer.setContactPerson(customer.getContactPerson());
             }
             sessionFactory.getCurrentSession().update(currentCustomer);
-            return "Successfully update customer with id " + customer.getId();
+            return "Successfully update customer";
         } else {
             return "Failed to update non-existent customer";
         }
@@ -104,7 +104,7 @@ public class CustomerService {
         if (customer != null) {
             salesInvoiceService.removeCustomerFromInvoices(id);
             sessionFactory.getCurrentSession().delete(customer);
-            return "Successfully delete customer with id " + customer.getId();
+            return "Successfully delete customer";
         } else {
             return "Failed to delete non-existent customer";
         }

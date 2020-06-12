@@ -21,9 +21,6 @@ public class InventoryService {
     @Autowired
     private InventoryReceivingNoteDetailService receivedDetailService;
 
-    @Autowired
-    private ProductService productService;
-
     public String getProductInventoryInAPeriod(Date start, Date end) {
         List<InventoryReceivingNoteDetail> receivedDetails = receivedDetailService.getDetailsByPeriod(start, end);
         List<InventoryDeliveryNoteDetail> deliveredDetails = deliveredDetailService.getDetailsByPeriod(start, end);

@@ -94,7 +94,7 @@ public class InventoryDeliveryNoteService {
             return "Failed to create inventory delivery note without any details";
         }
         sessionFactory.getCurrentSession().save(note);
-        return "Successfully create new inventory delivery note with id " + note.getId();
+        return "Successfully create new inventory delivery note";
     }
 
     public String updateNote(InventoryDeliveryNote note) {
@@ -122,7 +122,7 @@ public class InventoryDeliveryNoteService {
                 }
             }
             sessionFactory.getCurrentSession().merge(currentNote);
-            return "Successfully update inventory delivery note with id " + note.getId();
+            return "Successfully update inventory delivery note";
         }
     }
 
@@ -142,7 +142,7 @@ public class InventoryDeliveryNoteService {
             invoiceService.removeNoteFromInvoices(id);
             noteDetailService.removeNoteFromNoteDetails(id);
             sessionFactory.getCurrentSession().delete(note);
-            return "Successfully delete inventory delivery note with id " + note.getId();
+            return "Successfully delete inventory delivery note";
         } else {
             return "Failed to delete non-existent inventory delivery note";
         }

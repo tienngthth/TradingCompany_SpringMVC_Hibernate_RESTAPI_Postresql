@@ -7,6 +7,7 @@ import service.StaffService;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/staffs")
 public class StaffController {
@@ -25,12 +26,12 @@ public class StaffController {
 
     @RequestMapping(path = "/read/name", method = RequestMethod.GET)
     public List<Staff> getStaffsByName(@RequestParam String name, @RequestParam int page){
-        return paginatedDisplay(staffService.getStaffsByName(name.toLowerCase()), page);
+        return paginatedDisplay(staffService.getStaffsByName(name.toLowerCase().replaceAll(" ","")), page);
     }
 
     @RequestMapping(path = "/read/address", method = RequestMethod.GET)
     public List<Staff> getStaffsByAddress(@RequestParam String address, @RequestParam int page){
-        return paginatedDisplay(staffService.getStaffsByAddress(address.toLowerCase()), page);
+        return paginatedDisplay(staffService.getStaffsByAddress(address.toLowerCase().replaceAll(" ","")), page);
     }
 
     @RequestMapping(path = "/read/phone", method = RequestMethod.GET)
@@ -54,17 +55,7 @@ public class StaffController {
     }
 
     public List<Staff> paginatedDisplay(List<Staff> staffs, int page) {
-        if (page == -1) {
-            return staffs;
-        }
-        int firstIndex = (page - 1) * 5;
-        if (staffs.size() < firstIndex || page <= 0) {
-            return new ArrayList<>();
-        }
-        int lastIndex = firstIndex + 5;
-        if (staffs.size() < lastIndex) {
-            lastIndex = staffs.size();
-        }
-        return staffs.subList(firstIndex, lastIndex);
+        int[] indices = SupportController.getIndices(staffs.size(), page);
+        return staffs.subList(indices[0], indices[1]);
     }
 }

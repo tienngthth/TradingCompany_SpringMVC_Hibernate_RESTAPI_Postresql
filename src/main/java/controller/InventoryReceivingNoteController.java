@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/inventoryReceivingNotes")
 public class InventoryReceivingNoteController {
@@ -51,17 +52,7 @@ public class InventoryReceivingNoteController {
     }
 
     public List<InventoryReceivingNote> paginatedDisplay(List<InventoryReceivingNote> notes, int page) {
-        if (page == -1) {
-            return notes;
-        }
-        int firstIndex = (page - 1) * 5;
-        if (notes.size() < firstIndex || page <= 0) {
-            return new ArrayList<>();
-        }
-        int lastIndex = firstIndex + 5;
-        if (notes.size() < lastIndex) {
-            lastIndex = notes.size();
-        }
-        return notes.subList(firstIndex, lastIndex);
+        int[] indices = SupportController.getIndices(notes.size(), page);
+        return notes.subList(indices[0], indices[1]);
     }
 }

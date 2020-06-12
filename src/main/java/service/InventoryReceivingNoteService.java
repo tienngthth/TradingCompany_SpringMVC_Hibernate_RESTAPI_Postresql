@@ -108,7 +108,7 @@ public class InventoryReceivingNoteService {
             return "Failed to create inventory receiving note to have order belonged to another note";
         }
         sessionFactory.getCurrentSession().save(note);
-        return "Successfully create new inventory receiving note with id " + note.getId();
+        return "Successfully create new inventory receiving note";
     }
 
     public String updateNote(InventoryReceivingNote note) {
@@ -140,7 +140,7 @@ public class InventoryReceivingNoteService {
                 }
             }
             sessionFactory.getCurrentSession().update(currentNote);
-            return "Successfully update inventory receiving note with id " + note.getId();
+            return "Successfully update inventory receiving note";
         } else {
             return "Failed to update non-existent inventory receiving note";
         }
@@ -151,7 +151,7 @@ public class InventoryReceivingNoteService {
         if (note != null) {
             noteDetailService.removeNoteFromNoteDetails(id);
             sessionFactory.getCurrentSession().delete(note);
-            return "Successfully delete inventory receiving note with id " + note.getId();
+            return "Successfully delete inventory receiving note";
         } else {
             return "Failed to delete non-existent inventory receiving note";
         }

@@ -57,23 +57,23 @@ public class StaffService {
         if (staff.getName() == null) {
             return "Failed to create new staff without name";
         } else {
-            staff.setName(staff.getName().toLowerCase());
+            staff.setName(staff.getName().toLowerCase().replaceAll(" ",""));
         }
         if (staff.getAddress() != null) {
-            staff.setAddress(staff.getAddress().toLowerCase());
+            staff.setAddress(staff.getAddress().toLowerCase().replaceAll(" ",""));
         }
         if (staff.getPhone() != null) {
             staff.setPhone(staff.getPhone().replaceAll(" ",""));
         }
         sessionFactory.getCurrentSession().save(staff);
-        return "Successfully create new staff with id " + staff.getId();
+        return "Successfully create new staff";
     }
 
     public String updateStaff(Staff staff) {
         Staff currentStaff = getStaffById(staff.getId());
         if (currentStaff != null) {
             if (staff.getName() != null) {
-                currentStaff.setName(staff.getName().toLowerCase());
+                currentStaff.setName(staff.getName().toLowerCase().replaceAll(" ",""));
             }
             if (staff.getEmail() != null) {
                 currentStaff.setEmail(staff.getEmail());
@@ -82,10 +82,10 @@ public class StaffService {
                 currentStaff.setPhone(staff.getPhone().replaceAll(" ",""));
             }
             if (staff.getAddress() != null) {
-                currentStaff.setAddress(staff.getAddress().toLowerCase());
+                currentStaff.setAddress(staff.getAddress().toLowerCase().replaceAll(" ",""));
             }
             sessionFactory.getCurrentSession().update(currentStaff);
-            return "Successfully update staff with id " + staff.getId();
+            return "Successfully update staff";
         } else {
             return "Failed to update non-existent staff";
         }
@@ -98,7 +98,7 @@ public class StaffService {
             inventoryReceivingNoteService.removeStaffFromNotes(id);
             inventoryDeliveryNoteService.removeStaffFromNotes(id);
             sessionFactory.getCurrentSession().delete(staff);
-            return "Successfully delete staff with id " + staff.getId();
+            return "Successfully delete staff";
         } else {
             return "Failed to delete non-existent staff";
         }

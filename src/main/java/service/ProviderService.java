@@ -18,8 +18,12 @@ public class ProviderService {
         return (Provider) this.sessionFactory.getCurrentSession().get(Provider.class, Id);
     }
 
-    public void newProvider(Provider provider) {
+    public String newProvider(Provider provider) {
+        if (provider.getName() == null) {
+            return "Failed to create new provider without name";
+        }
         this.sessionFactory.getCurrentSession().save(provider);
+        return "Successfully create new provider";
     }
 
     public List<Provider> getAllProviders() {

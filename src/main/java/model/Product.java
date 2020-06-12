@@ -1,16 +1,6 @@
 package model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.Immutable;
-
 import javax.persistence.*;
 
-/*
-    For this entity, it is assumed that all records are created and updated before.
-    No REST API is created to directly create, update, display, delete any records from this entity.
-    The system won't delete, update, create any records for this entity by any cases when working with others REST APIs.
-    When the record is displayed via other entity's records, only id, name, sellingprice and category are displayed.
-*/
 @Entity
 @Table(name = "product")
 public class Product {
@@ -19,11 +9,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column (nullable = false, unique = true)
+    @Column (nullable = false)
     private String name;
 
     @Column
-    @JsonIgnore
     private String model, brand, company, description;
 
     @Column

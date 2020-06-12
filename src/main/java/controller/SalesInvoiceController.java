@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/salesInvoices")
 public class SalesInvoiceController {
@@ -81,17 +82,7 @@ public class SalesInvoiceController {
     }
 
     public List<SalesInvoice> paginatedDisplay(List<SalesInvoice> invoices, int page) {
-        if (page == -1) {
-            return invoices;
-        }
-        int firstIndex = (page - 1) * 5;
-        if (invoices.size() < firstIndex || page <= 0) {
-            return new ArrayList<>();
-        }
-        int lastIndex = firstIndex + 5;
-        if (invoices.size() < lastIndex) {
-            lastIndex = invoices.size();
-        }
-        return invoices.subList(firstIndex, lastIndex);
+        int[] indices = SupportController.getIndices(invoices.size(), page);
+        return invoices.subList(indices[0], indices[1]);
     }
 }

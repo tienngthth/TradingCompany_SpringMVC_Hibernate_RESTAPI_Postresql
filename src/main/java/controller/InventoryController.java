@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import service.InventoryService;
 import java.sql.Date;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/")
 public class InventoryController {

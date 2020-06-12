@@ -165,7 +165,7 @@ public class SalesInvoiceService {
             return "Failed to create sales invoice to have inventory delivery note belonged to another invoice";
         }
         sessionFactory.getCurrentSession().save(invoice);
-        return "Successfully create new sales invoice with id " + invoice.getId();
+        return "Successfully create new sales invoice";
     }
 
     public String updateInvoice(SalesInvoice invoice) {
@@ -204,7 +204,7 @@ public class SalesInvoiceService {
                 }
             }
             sessionFactory.getCurrentSession().update(currentInvoice);
-            return "Successfully update sales invoice with id " + currentInvoice.getId();
+            return "Successfully update sales invoice";
         } else {
             return "Failed to update non-existent sales invoice";
         }
@@ -215,7 +215,7 @@ public class SalesInvoiceService {
         if (invoice != null) {
             invoiceDetailService.removeInvoiceFromInvoiceDetails(id);
             sessionFactory.getCurrentSession().delete(invoice);
-            return "Successfully delete sales invoice with id " + invoice.getId();
+            return "Successfully delete sales invoice";
         } else {
             return "Failed to delete non-existent sales invoice";
         }

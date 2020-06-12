@@ -68,5 +68,4 @@ public class ProviderOrder {
     public void setProvider(Provider provider) {
         this.provider = provider;
     }
-
 }

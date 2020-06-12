@@ -15,6 +15,9 @@ public class ProductService {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Autowired
+    private CategoryService categoryService;
+
     public Product getProductById(int id) {
         return (Product) sessionFactory.getCurrentSession().get(Product.class, id);
     }
@@ -29,10 +32,19 @@ public class ProductService {
         }
     }
 
-    public void newProduct(Product product) {
-        if (product.getName() != null && getProductByName(product.getName()) == null) {
-            this.sessionFactory.getCurrentSession().save(product);
+    public String newProduct(Product product) {
+        if (product.getName() == null) {
+            return "Failed to create new product without name";
         }
+        if (product.getCategory() != null) {
+            if (product.getCategory().getId() == 0) {
+                product.setCategory(null);
+            } else if (categoryService.getCategoryById(product.getCategory().getId()) == null) {
+                return "Failed to create new product with non existent category";
+            }
+        }
+        this.sessionFactory.getCurrentSession().save(product);
+        return "Successfully create new product";
     }
 
     public List<Product> getAllProducts() {

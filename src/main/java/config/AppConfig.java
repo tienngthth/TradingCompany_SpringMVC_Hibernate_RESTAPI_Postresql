@@ -9,6 +9,9 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
 import java.util.Properties;
 
 /**
@@ -18,15 +21,19 @@ import java.util.Properties;
 @EnableTransactionManagement
 @EnableWebMvc
 @ComponentScan({"controller", "service"})
-public class AppConfig {
+public class AppConfig extends WebMvcConfigurerAdapter {
+    @Override
+    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("/WEB-INF/classes/static/");
+    }
 
     @Bean
     public LocalSessionFactoryBean sessionFactory(){
-
         Properties properties = new Properties();
         properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         properties.put("hibernate.show_sql", true);
-        properties.put("hibernate.hbm2ddl.auto", "update");
+        properties.put("hibernate.hbm2ddl.auto", "create-drop");
 
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
 

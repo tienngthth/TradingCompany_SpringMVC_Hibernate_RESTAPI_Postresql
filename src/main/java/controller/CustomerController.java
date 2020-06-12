@@ -7,6 +7,7 @@ import service.CustomerService;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/customers")
 public class CustomerController {
@@ -25,12 +26,12 @@ public class CustomerController {
 
     @RequestMapping(path = "/read/name", method = RequestMethod.GET)
     public List<Customer> getCustomersByName(@RequestParam String name, @RequestParam int page){
-        return paginatedDisplay(customerService.getCustomersByName(name.toLowerCase()), page);
+        return paginatedDisplay(customerService.getCustomersByName(name.toLowerCase().replaceAll(" ","")), page);
     }
 
     @RequestMapping(path = "/read/address", method = RequestMethod.GET)
     public List<Customer> getCustomersByAddress(@RequestParam String address, @RequestParam int page){
-        return paginatedDisplay(customerService.getCustomersByAddress(address.toLowerCase()), page);
+        return paginatedDisplay(customerService.getCustomersByAddress(address.toLowerCase().replaceAll(" ","")), page);
     }
 
     @RequestMapping(path = "/read/phone", method = RequestMethod.GET)
@@ -54,17 +55,7 @@ public class CustomerController {
     }
 
     public List<Customer> paginatedDisplay(List<Customer> customers, int page) {
-        if (page == -1) {
-            return customers;
-        }
-        int firstIndex = (page - 1) * 5;
-        if (customers.size() < firstIndex || page <= 0) {
-            return new ArrayList<>();
-        }
-        int lastIndex = firstIndex + 5;
-        if (customers.size() < lastIndex) {
-            lastIndex = customers.size();
-        }
-            return customers.subList(firstIndex, lastIndex);
+        int[] indices = SupportController.getIndices(customers.size(), page);
+        return customers.subList(indices[0], indices[1]);
     }
 }

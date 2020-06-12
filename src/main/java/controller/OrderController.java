@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/orders")
 public class OrderController {
@@ -52,17 +53,7 @@ public class OrderController {
     }
 
     public List<ProviderOrder> paginatedDisplay(List<ProviderOrder> orders, int page) {
-        if (page == -1) {
-            return orders;
-        }
-        int firstIndex = (page - 1) * 5;
-        if (orders.size() < firstIndex || page <= 0) {
-            return new ArrayList<>();
-        }
-        int lastIndex = firstIndex + 5;
-        if (orders.size() < lastIndex) {
-            lastIndex = orders.size();
-        }
-        return orders.subList(firstIndex, lastIndex);
+        int[] indices = SupportController.getIndices(orders.size(), page);
+        return orders.subList(indices[0], indices[1]);
     }
 }

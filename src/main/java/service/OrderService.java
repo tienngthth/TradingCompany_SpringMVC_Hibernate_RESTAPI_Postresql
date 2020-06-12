@@ -93,7 +93,7 @@ public class OrderService {
             return "Failed to create order without any details";
         }
         sessionFactory.getCurrentSession().save(order);
-        return "Successfully create new order with id " + order.getId();
+        return "Successfully create new order";
     }
 
     public String updateOrder(ProviderOrder order) {
@@ -128,7 +128,7 @@ public class OrderService {
                 }
             }
             sessionFactory.getCurrentSession().merge(currentOrder);
-            return "Successfully update order with id " + order.getId();
+            return "Successfully update order";
         }
     }
 
@@ -148,7 +148,7 @@ public class OrderService {
             orderDetailService.removeOrderFromOrderDetails(id);
             noteService.removeOrderFromNotes(id);
             sessionFactory.getCurrentSession().delete(providerOrder);
-            return "Successfully delete order with id " + providerOrder.getId();
+            return "Successfully delete order";
         } else {
             return "Failed to delete non-existent order";
         }
